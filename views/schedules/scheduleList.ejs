@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<title>Schedule</title>
+<link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+</head>
+<body>
+
+  <div class="header">
+
+	<div class="heading">
+		<div class="mainInfo">
+			<div class="logo">
+				<img src="img/logo_transparent.png" alt="Logo">
+			</div>
+			<h1>Bus Travel</h1>
+		</div>
+  
+  
+  
+  
+  
+ <div class="nav">
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/'">Strona główna</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="selectedButton" onclick="window.location.href = '/schedules'">Rozkład jazdy</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/drivers'">Kierowcy</button>
+	</div>
+	
+	
+		<div class="navigateSection">
+			<button type="button" class="navigateButton" onclick="window.location.href = '/buses'">Autobusy</button>
+		</div>
+	</div>
+	
+	</div>
+	
+	<div><h3 class="pageTitle">Schedule</h3></div>
+	<div class="titleTextCont"><p class="titleText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+	Aenean commodo ligula eget dolor</p></div>
+		
+	<div class="titleButton"><button class="navigateButtonSelected" type="button" onclick="window.location.href = '#top';">go to table</button>
+	
+	
+  </div>  
+  
+ </div>
+  
+  
+  
+  
+  <div class="main" id="top">
+  
+	<table>
+	<tr>
+		<th>Id</th>
+		<th>Z</th> 
+		<th>Do</th>
+		<th>Data wyjazdu</th>
+		<th>Data przyjazdu</th> 
+		<th>Szcegóły</th>
+	</tr>
+	<% scheduleList.forEach(function(schedule){ %>
+	<tr>
+		<td><%= schedule.id %></td>
+		
+		<% cityList.forEach(function(city){ %>
+		
+		<% if (city.id == schedule.cityFrom) { %>
+			<td> <%= city.cityName %> </td> 
+		<% } %>
+		
+		<% }) %>
+		
+		<% cityList.forEach(function(city){ %>
+		
+		<% if (city.id == schedule.cityTo) { %>
+			<td> <%= city.cityName %> </td> 
+		<% } %>
+		
+		<% }) %>
+		
+		<td><%= schedule.departure.getFullYear() %>-<%= ("0" + (schedule.departure.getMonth() + 1)).slice(-2) %>-<%= ("0" + schedule.departure.getDate()).slice(-2) %></td>
+		<td><%= schedule.arrival.getFullYear() %>-<%= ("0" + (schedule.arrival.getMonth() + 1)).slice(-2) %>-<%= ("0" + schedule.arrival.getDate()).slice(-2) %></td> 
+		<td>
+			<button type="button" 
+			class="tableButton" 
+			onclick="window.location.href = '/schedules/showDetails?schedule_id=<%= schedule.id %>'">
+			Pokaż szcegóły</button>
+	
+			<button type="button" 
+			class="tableButton" 
+			onclick="window.location.href = '/schedules/showEditForm?schedule_id=<%= schedule.id %>'">
+			Edytuj</button> 
+			
+			<button type="button" 
+			class="tableButton" 
+			onclick="confirmDelete('<%= schedule.id %>')">
+			Usuń</button> 
+			
+		</td>
+	</tr>
+	
+	<% }) %>
+	
+	</table>
+	
+	<script>
+	function confirmDelete(id){
+	
+		if(confirm("Czy napewno chcesz usunąć ten rekord?")){
+			window.location.href = "/schedules/delete?schedule_id="+id;
+		}
+	
+	}
+	
+	</script>
+	
+	
+	
+	<div class="bottomSection">
+		<button type="button" class="tableButtonSelected" onclick="window.location.href = '/schedules/showNewForm'">Dodaj nowy rekord</button>
+	</div>
+	
+	
+  </div>
+  
+  
+  
+  
+  
+   <div class="footer">
+	<div class="footerMain">
+		
+		<div class="info">
+			<h3 class="footerHead">About us</h3>
+			<p class="footerText"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et 
+			magnis dis parturient montes, nascetur ridiculus mus.</p>
+		</div>
+		
+	
+		<div class="social">
+			<h3 class="footerHead">Social media</h3>
+			
+			
+			<ul>
+				<li><a href="https://www.facebook.com"><img class="icon" src="icons/fb.png" alt="facebook"</img></a></li>
+				<li><a href="https://www.instagram.com"><img class="icon" src="icons/in.png" alt="instagram"</img></a></li>
+				<li><a href="https://twitter.com"><img class="icon" src="icons/tw.png" alt="twitter"</img></a></li>
+				<li><a href="https://youtube.com"><img class="icon" src="icons/yt.png" alt="youtube"</img></a></li>
+				<li><a href="https://plus.google.com"><img class="icon" src="icons/gp.png" alt="gplus"</img></a></li>
+			</ul>
+		
+		</div>
+	
+		<div class="contact">
+			<h3 class="footerHead">Contact us</h3>
+			
+			<div class="footerContact">
+				<a HREF=mailto:s.kovalenko2016@gmail.com><img class= "footerImage" src="img/cat.jpg" alt="mail"</img></a>
+				<div class="question">
+					<div><p class="footerText">Have any questions?</p></div>
+					<div><strong>Send me a mail</strong></div>
+				</div>
+			</div>
+			
+			<div class="contactInfo">
+				<div><p><strong>Tel: </strong>+48 123 456 789</p></div>
+				<div><p><strong>Mail: </strong>company@gmail.com</p></div>
+			</div>
+		</div>
+	
+	</div>
+	
+	<hr></hr>
+	<sup>© 2020 All rights reserved</sup>	
+</div>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<title>Add New Bus</title>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/style.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/form.css'>
+<meta charset="UTF-8">
+</head>
+<body>
+
+ <div class="header">
+	<div class="heading">
+		<div class="mainInfo">
+			<div class="logo">
+				<img src="../img/logo_transparent.png" alt="Logo">
+			</div>
+			<h1>Bus Travel</h1>
+		</div>
+		
+		<div class="nav">
+			<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/'">Strona główna</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/schedules'">Rozkład jazdy</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/drivers'">Kierowcy</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="selectedButton" onclick="window.location.href = '/buses'">Autobusy</button>
+	</div>
+		</div>  
+		
+		</div>
+		
+		<div><h3 class="pageTitle">New Bus</h3></div>
+		<div class="titleTextCont"><p class="titleText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+		Aenean commodo ligula eget dolor</p></div>
+		
+		<div class="titleButton"><button class="navigateButtonSelected" type="button" onclick="window.location.href = '#top';">go to table</button>
+		
+	</div>
+  </div>
+
+
+  
+  <div class="main" id="top">
+	<h2 class="textHeading">Dodaj nowy autobus</h2>
+	
+	<form onsubmit="return validate();"  action="/buses/<%= formAction %>" method="POST">
+
+	<input type="hidden" name="bus_id" value="<%= bus.id %>"></input>
+
+
+	<table>
+	<tr>
+		<td class="tableHead" id="nazwaHead">Nazwa</td>
+		
+		<td>
+			<div><input class="mainInput" id="nazwa" name="name"
+			type="text" placeholder="Nazwa" <%= formAction ? '' : 'readonly' %>
+                value="<%= bus.name %>"/>
+			<p class="wrongData" id="nameWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="iloscMiejscHead">Ilość miejsc</td>
+		
+		<td>
+			<div><input class="mainInput" id="iloscMiejsc" name="seats"
+			type="number" placeholder="Ilość miejsc" <%= formAction ? '' : 'readonly' %>
+                value="<%= bus.seats %>"/>
+			<p class="wrongData" id="seatWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="numerRejestracyjnyHead">Numer rejestracyjny</td>
+		
+		<td>
+			<div><input class="mainInput" id="numerRejestracyjny" name="number"
+			type="text" placeholder="Numer rejestracyjny" <%= formAction ? '' : 'readonly' %>
+                value="<%= bus.number %>"/>
+			<p class="wrongData" id="numberWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="dataZakupuHead">Data zakupu</td>
+		
+		<td>
+			<div><input class="mainInput" id="dataZakupu" name="date"
+			type="date" placeholder="Data zakupu" <%= formAction ? '' : 'readonly' %>
+                value="<%= bus.date %>"/>
+			<p class="wrongData" id="dateWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="przebiegHead">Przebieg</td>
+		
+		<td>
+			<div><input class="mainInput" id="przebieg" name="mileage"
+			type="text" placeholder="Przebieg" <%= formAction ? '' : 'readonly' %>
+                value="<%= bus.mileage %>"/>
+			<p class="wrongData" id="mileageWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	</table>
+	
+	<div class="returnSection">
+		<div class="bottomSection">
+		<% if( formAction ) { %>
+			<div class="buttonCont"><button type="submit" class="tableButtonSelected">Zapisz zmiany</button></div>
+		<% } %>
+			<div class="buttonCont"><button type="button" class="tableButtonSelected" onclick="window.location.href = '/buses'">Powrót</button></div>
+		</div>
+		
+		<div class="validationError">
+			<p class="wrongData" id="wrongForm" style="display: none;"></p>			
+		</div>
+	
+	</div>
+	
+	</form>
+	
+  </div>
+  
+  
+  <script>
+	function validate(){
+		var name = document.getElementById("nazwa");
+		var seat = document.getElementById("iloscMiejsc");
+		var number = document.getElementById("numerRejestracyjny");
+		var date = document.getElementById("dataZakupu");
+		var mileage = document.getElementById("przebieg");
+		
+		var nameHead = document.getElementById("nazwaHead");
+		var seatHead = document.getElementById("iloscMiejscHead");
+		var numberHead = document.getElementById("numerRejestracyjnyHead");
+		var dateHead = document.getElementById("dataZakupuHead");
+		var mileageHead = document.getElementById("przebiegHead");
+		
+		var array = [];
+		
+		var isCorrect = true;
+		
+		
+		nameHead.style.color = "#F2FAFE";
+		seatHead.style.color = "#F2FAFE";
+		numberHead.style.color = "#F2FAFE";
+		dateHead.style.color = "#F2FAFE";
+		mileageHead.style.color = "#F2FAFE";
+		
+		document.getElementById("nameWrong").style.display = "none";
+		document.getElementById("seatWrong").style.display = "none";
+		document.getElementById("numberWrong").style.display = "none";
+		document.getElementById("dateWrong").style.display = "none";
+		document.getElementById("mileageWrong").style.display = "none";
+		
+		document.getElementById("wrongForm").style.display = "none";
+		
+		
+		//wrong data
+		
+		//nazwa
+		if(name.value.trim().length < 3){
+			nameHead.style.color = "#FF0095";
+			var txt = "Value is too small";
+			document.getElementById("nameWrong").innerHTML = txt;
+			document.getElementById("nameWrong").style.display = "block";
+			array[array.length] = "Nazwa: "+txt;
+			isCorrect = false;
+		}
+		
+		if(name.value.trim().length > 30){
+			nameHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("nameWrong").innerHTML = txt;
+			document.getElementById("nameWrong").style.display = "block";
+			array[array.length] = "Nazwa: "+txt;
+			isCorrect = false;
+		}
+		
+		//ilosc miejsc
+		if(seat.value < 0){
+			seatHead.style.color = "#FF0095";
+			var txt = "Numer of seats cannot be less than 0";
+			document.getElementById("seatWrong").innerHTML = txt;
+			document.getElementById("seatWrong").style.display = "block";
+			array[array.length] = "Ilość miejsc: "+txt;
+			isCorrect = false;
+		}
+		
+		if(seat.value > 200){
+			seatHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("seatWrong").innerHTML = txt;
+			document.getElementById("seatWrong").style.display = "block";
+			array[array.length] = "Ilość miejsc: "+txt;
+			isCorrect = false;
+		}
+		
+		if(seat.value.trim().length < 1){
+			seatHead.style.color = "#FF0095";
+			var txt = "Please enter a number of seats";
+			document.getElementById("seatWrong").innerHTML = txt;
+			document.getElementById("seatWrong").style.display = "block";
+			array[array.length] = "Ilość miejsc: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		//numer rejestracyjny
+		if(number.value.trim().length > 10){
+			numberHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("numberWrong").innerHTML = txt;
+			document.getElementById("numberWrong").style.display = "block";
+			array[array.length] = "Numer rejestracyjny: "+txt;
+			isCorrect = false;
+		}
+		
+		if(number.value.trim().length < 3){
+			numberHead.style.color = "#FF0095";
+			var txt = "Value is too small";
+			document.getElementById("numberWrong").innerHTML = txt;
+			document.getElementById("numberWrong").style.display = "block";
+			array[array.length] = "Numer rejestracyjny: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		
+		
+		//data zakupu
+        if(!date.value){
+			dateHead.style.color = "#FF0095";
+			var txt = "Please select a date";
+			document.getElementById("dateWrong").innerHTML = txt;
+			document.getElementById("dateWrong").style.display = "block";
+			array[array.length] = "Data zakupu: "+txt;
+			isCorrect = false;
+		}	
+
+		var inputDate = new Date(date.value);
+		var minDate = new Date(2000, 0, 1);
+		var maxDate = new Date();
+	
+
+		if(inputDate <= minDate || inputDate > maxDate){
+			dateHead.style.color = "#FF0095";
+			var txt = "Wrong date";
+			document.getElementById("dateWrong").innerHTML = txt;
+			document.getElementById("dateWrong").style.display = "block";
+			array[array.length] = "Data zakupu: "+txt;
+			isCorrect = false;
+		}
+
+		
+		
+		//przebieg
+		if(mileage.value.trim().length > 8){
+			mileageHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("mileageWrong").innerHTML = txt;
+			document.getElementById("mileageWrong").style.display = "block";
+			array[array.length] = "Przebieg: "+txt;
+			isCorrect = false;
+		}
+		
+		if(mileage.value.trim().length < 1){
+			mileageHead.style.color = "#FF0095";
+			var txt = "Please enter a mileage";
+			document.getElementById("mileageWrong").innerHTML = txt;
+			document.getElementById("mileageWrong").style.display = "block";
+			array[array.length] = "Przebieg: "+txt;
+			isCorrect = false;
+		}
+		
+		if(mileage.value < 0){
+			mileageHead.style.color = "#FF0095";
+			var txt = "Mileage cannot be less than 0 km"
+			document.getElementById("mileageWrong").innerHTML = txt;
+			document.getElementById("mileageWrong").style.display = "block";
+			array[array.length] = "Przebieg: "+txt;
+			isCorrect = false;
+		}
+		
+		
+
+		
+		if(!isCorrect){
+			document.getElementById("wrongForm").innerHTML = "The form is incorrect!"
+			document.getElementById("wrongForm").style.display = "block";
+			
+			var txt ="";
+			
+			for (i=0; i<array.length; i++){
+				txt+= '\n' + "  -" + array[i];
+			}
+			
+			
+			alert("Formularz zawiera błędy:"+ txt);
+			return false;
+		}
+		else{
+			alert("Zmiany zostaly zapisane");
+			return true;
+		}
+
+	}
+  </script>
+  
+  
+  
+  
+  
+  <div class="footer">
+	<div class="footerMain">
+		
+		<div class="info">
+			<h3 class="footerHead">About us</h3>
+			<p class="footerText"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et 
+			magnis dis parturient montes, nascetur ridiculus mus.</p>
+		</div>
+		
+	
+		<div class="social">
+			<h3 class="footerHead">Social media</h3>
+			
+			
+			<ul>
+				<li><a href="https://www.facebook.com"><img class="icon" src="../icons/fb.png" alt="facebook"</img></a></li>
+				<li><a href="https://www.instagram.com"><img class="icon" src="../icons/in.png" alt="instagram"</img></a></li>
+				<li><a href="https://twitter.com"><img class="icon" src="../icons/tw.png" alt="twitter"</img></a></li>
+				<li><a href="https://youtube.com"><img class="icon" src="../icons/yt.png" alt="youtube"</img></a></li>
+				<li><a href="https://plus.google.com"><img class="icon" src="../icons/gp.png" alt="gplus"</img></a></li>
+			</ul>
+		
+		</div>
+	
+		<div class="contact">
+			<h3 class="footerHead">Contact us</h3>
+			
+			<div class="footerContact">
+				<a HREF=mailto:s.kovalenko2016@gmail.com><img class= "footerImage" src="../img/cat.jpg" alt="mail"</img></a>
+				<div class="question">
+					<div><p class="footerText">Have any questions?</p></div>
+					<div><strong>Send me a mail</strong></div>
+				</div>
+			</div>
+			
+			<div class="contactInfo">
+				<div><p><strong>Tel: </strong>+48 123 456 789</p></div>
+				<div><p><strong>Mail: </strong>company@gmail.com</p></div>
+			</div>
+		</div>
+	
+	</div>
+	
+	<hr></hr>
+	<sup>© 2020 All rights reserved</sup>	
+</div>
+</body>
+
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<title>Add New Schedule</title>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/style.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/form.css'>
+<meta charset="UTF-8">
+</head>
+<body>
+
+  <div class="header">
+	<div class="heading">
+		<div class="mainInfo">
+			<div class="logo">
+				<img src="../img/logo_transparent.png" alt="Logo">
+			</div>
+			<h1>Bus Travel</h1>
+		</div>
+		
+		<div class="nav">
+				<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/'">Strona główna</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="selectedButton" onclick="window.location.href = '/schedules'">Rozkład jazdy</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/drivers'">Kierowcy</button>
+	</div>
+	
+	
+		<div class="navigateSection">
+			<button type="button" class="navigateButton" onclick="window.location.href = '/buses'">Autobusy</button>
+		</div>
+		</div>  
+		
+		</div>
+		
+		<div><h3 class="pageTitle">New Schedule</h3></div>
+		<div class="titleTextCont"><p class="titleText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+		Aenean commodo ligula eget dolor</p></div>
+		
+		<div class="titleButton"><button class="navigateButtonSelected" type="button" onclick="window.location.href = '#top';">go to table</button>
+		
+	</div>
+  </div>
+
+
+  
+  <div class="main" id="top">
+	<h2 class="textHeading">Dodaj nowy rejs</h2>
+	
+	<form onsubmit="return validate();" action="/schedules/<%= formAction %>" method="POST">
+	
+	<input type="hidden" name="schedule_id" value="<%= schedule.id %>"></input>
+
+	
+	<table>
+	<tr>
+		<td class="tableHead"  id="dataOdjazduHead">Data odjazdu</td>
+		<td>
+		
+			<div><input class="mainInput" id="dataOdjazdu" name="departure"
+			type="date" placeholder="Data odjazdu" <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.departure %>"/>
+			
+			<p class="wrongData" id="departureWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="dataPrzyjazduHead">Data przyjazdu</td>
+		<td>
+		
+			<div><input class="mainInput" id="dataPrzyjazdu" name="arrival"
+			type="date" placeholder="Data przyjazdu"  <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.arrival %>"/>
+		
+			<p class="wrongData" id="arrivalWrong" style="display: none;"></p></div>
+
+		</td>
+	<tr>
+	
+	
+	<tr>
+		<td class="tableHead" id="czasOdjazduHead">Czas odjazdu</td>
+		<td>
+		
+			<div><input class="mainInput" id="czasOdjazdu" name="departureTime"
+			type="time" placeholder="Czas odjazdu" <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.departureTime %>"/>
+			
+			<p class="wrongData" id="departureTimeWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="czasPrzyjazduHead">Czas przyjazdu</td>
+		<td>
+		
+			<div><input class="mainInput" id="czasPrzyjazdu" name="arrivalTime"
+			type="time" placeholder="Czas przyjazdu"  <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.arrivalTime %>"/>
+		
+			<p class="wrongData" id="arrivalTimeWrong" style="display: none;"></p></div>
+
+		</td>
+	<tr>
+
+	<tr>
+		<td class="tableHead">Punkt początkowy</td>
+		<td>
+			<select class="mainSelect" id = "punktPoczatkowy" name="cityFrom" <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.cityFrom %>">
+				
+				<% cityList.forEach(function(city){ %>
+				
+				<option value="<%= city.id %>"> <%= city.cityName %> <% }) %></option>
+				
+			</select>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id = "punktKoncowyHead">Punkt końcowy</td>
+		<td>
+		
+		<div>
+			<select class="mainSelect" id = "punktKoncowy" name="cityTo" <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.cityTo %>">
+				
+				<% cityList.forEach(function(city){ %>
+				
+				<option value="<%= city.id %>"> <%= city.cityName %> <% }) %></option>
+				
+			</select>
+			
+		<p class="wrongData" id="destinationWrong" style="display: none;"></p></div>
+
+		</td>
+	<tr>
+	
+	
+	<tr>
+		<td class="tableHead" id="cenaHead">Cena biletu</td>
+		<td>
+			<div><input class="mainInput" id="cena" name="price"
+			type="number" placeholder="Cena biletu" <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.price %>">
+			<p class="wrongData" id="priceWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+
+	
+	
+	<tr>
+		<td class="tableHead">Kierowca</td>
+		<td>
+			<select class="mainSelect" id="kierowca" name="driver" <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.driver %>">
+				
+				<% driverList.forEach(function(driver){ %>
+				
+				<option value="<%= driver.id %>"> <%= driver.firstName %> <%= driver.lastName %> <% }) %></option>
+				
+				
+			</select>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Autobus</td>
+		<td>
+			<select class="mainSelect" id="autobus" name="bus" <%= formAction ? '' : 'readonly' %>
+                value="<%= schedule.bus %>">
+				<% busList.forEach(function(bus){ %>
+				
+				<option value="<%= bus.id %>"> <%= bus.name %> <%= bus.number %> <% }) %></option>
+			</select>
+		</td>
+	<tr>
+	
+	</table>
+	
+	<div class="returnSection">
+		<div class="bottomSection">
+		<% if( formAction ) { %>
+			<div class="buttonCont"><button type="submit" class="tableButtonSelected">Zapisz zmiany</button></div>
+		<% } %>
+			<div class="buttonCont"><button type="button" class="tableButtonSelected" onclick="window.location.href = '/schedules'">Powrót</button></div>
+		</div>
+	
+		<div class="validationError">
+			<p class="wrongData" id="wrongForm" style="display: none;"></p>			
+		</div>
+	</div>
+	
+	</form>
+	
+  </div>
+  
+  
+   <script>
+	function validate(){
+		var departure = document.getElementById("dataOdjazdu");
+		var arrival = document.getElementById("dataPrzyjazdu");
+		var departureTime = document.getElementById("czasOdjazdu");
+		var arrivalTime = document.getElementById("czasPrzyjazdu");
+		var destination = document.getElementById("punktKoncowy");
+		var price = document.getElementById("cena");
+		
+		var departureHead = document.getElementById("dataOdjazduHead");
+		var arrivalHead = document.getElementById("dataPrzyjazduHead");
+		var departureTimeHead = document.getElementById("czasOdjazduHead");
+		var arrivalTimeHead = document.getElementById("czasPrzyjazduHead");
+		var destinationHead = document.getElementById("punktKoncowyHead");
+		var priceHead = document.getElementById("cenaHead");
+		
+		var array = [];
+		
+		var isCorrect = true;
+		
+		
+		departureHead.style.color = "#F2FAFE";
+		arrivalHead.style.color = "#F2FAFE";
+		departureTimeHead.style.color = "#F2FAFE";
+		arrivalTimeHead.style.color = "#F2FAFE";
+		destinationHead.style.color = "#F2FAFE";
+		priceHead.style.color = "#F2FAFE";
+		
+		
+		document.getElementById("departureWrong").style.display = "none";
+		document.getElementById("arrivalWrong").style.display = "none";
+		document.getElementById("departureTimeWrong").style.display = "none";
+		document.getElementById("arrivalTimeWrong").style.display = "none";
+		document.getElementById("destinationWrong").style.display = "none";
+		document.getElementById("priceWrong").style.display = "none";
+		
+		document.getElementById("wrongForm").style.display = "none";
+		
+		
+		//wrong data
+		
+		//data odjazdu
+		if(!departure.value){
+			departureHead.style.color = "#FF0095";
+			var txt = "Please select a date";
+			document.getElementById("departureWrong").innerHTML = txt;
+			document.getElementById("departureWrong").style.display = "block";
+			array[array.length] = "Data odjazdu: "+txt;
+			isCorrect = false;
+		}	
+
+		var inputDate = new Date(departure.value);
+		var minDate = new Date(2000, 0, 1);
+		var maxDate = new Date(2050, 0 ,1);
+	
+
+		if(inputDate <= minDate || inputDate > maxDate){
+			departureHead.style.color = "#FF0095";
+			var txt = "Wrong date";
+			document.getElementById("departureWrong").innerHTML = txt;
+			document.getElementById("departureWrong").style.display = "block";
+			array[array.length] = "Data odjazdu: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		//data przyjazdu
+		if(!arrival.value){
+			arrivalHead.style.color = "#FF0095";
+			var txt = "Please select a date";
+			document.getElementById("arrivalWrong").innerHTML = txt;
+			document.getElementById("arrivalWrong").style.display = "block";
+			array[array.length] = "Data przyjazdu: "+txt;
+			isCorrect = false;
+		}	
+
+		var inputDate = new Date(arrival.value);
+		var minDate = new Date(departure.value);
+		var maxDate = new Date(2050, 0 ,1);
+	
+
+		if(inputDate < minDate || inputDate > maxDate){
+			arrivalHead.style.color = "#FF0095";
+			var txt = "Wrong date";
+			document.getElementById("arrivalWrong").innerHTML = txt;
+			document.getElementById("arrivalWrong").style.display = "block";
+			array[array.length] = "Data przyjazdu: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		//czas odjazdu
+		if(!departureTime.value){
+			departureTimeHead.style.color = "#FF0095";
+			var txt = "Please enter a departure time";
+			document.getElementById("departureTimeWrong").innerHTML = txt;
+			document.getElementById("departureTimeWrong").style.display = "block";
+			array[array.length] = "Czas odjazdu: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		//czas przyjazdu
+		if(!arrivalTime.value){
+			arrivalTimeHead.style.color = "#FF0095";
+			var txt = "Please enter an arrival time";
+			document.getElementById("arrivalTimeWrong").innerHTML = txt;
+			document.getElementById("arrivalTimeWrong").style.display = "block";
+			array[array.length] = "Czas przyjazdu: "+txt;
+			isCorrect = false;
+		}
+		
+		arrivalDate = new Date(arrival.value);
+		departureDate = new Date(departure.value);
+		
+		if(arrivalDate <= departureDate && departureTime.value >= arrivalTime.value && arrivalTime.value){
+			arrivalTimeHead.style.color = "#FF0095";
+			var txt = "Arrival date and time should be greater than departure";
+			document.getElementById("arrivalTimeWrong").innerHTML = txt;
+			document.getElementById("arrivalTimeWrong").style.display = "block";
+			array[array.length] = "Czas przyjazdu: "+txt;
+			isCorrect = false;
+		}
+
+		
+		
+		
+		
+
+		//cena biletu
+		if(price.value.trim().length > 3){
+			priceHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("priceWrong").innerHTML = txt;
+			document.getElementById("priceWrong").style.display = "block";
+			array[array.length] = "Cena biletu: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		if(price.value < 5){
+			priceHead.style.color = "#FF0095";
+			var txt = "Ticket price cannot be less than 5 zl"
+			document.getElementById("priceWrong").innerHTML = txt;
+			document.getElementById("priceWrong").style.display = "block";
+			array[array.length] = "Cena biletu: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		
+		//punkt końcowy
+		
+		if(destination.value == document.getElementById("punktPoczatkowy").value){
+			destinationHead.style.color = "#FF0095";
+			var txt = "Destination city cannot be the same as departure city";
+			document.getElementById("destinationWrong").innerHTML = txt;
+			document.getElementById("destinationWrong").style.display = "block";
+			array[array.length] = "Punkt końcowy: "+txt;
+			isCorrect = false;
+		}
+		
+
+
+		
+		if(!isCorrect){
+			document.getElementById("wrongForm").innerHTML = "The form is incorrect!"
+			document.getElementById("wrongForm").style.display = "block";
+			
+			var txt ="";
+			
+			for (i=0; i<array.length; i++){
+				txt+= '\n' + "  -" + array[i];
+			}
+			
+			
+			alert("Formularz zawiera błędy:"+ txt);
+			return false;
+		}
+		else{
+			alert("Zmiany zostaly zapisane");
+			return true;
+		}
+
+	}
+  </script>
+  
+  
+  
+  
+  <div class="footer">
+	<div class="footerMain">
+		
+		<div class="info">
+			<h3 class="footerHead">About us</h3>
+			<p class="footerText"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et 
+			magnis dis parturient montes, nascetur ridiculus mus.</p>
+		</div>
+		
+	
+		<div class="social">
+			<h3 class="footerHead">Social media</h3>
+			
+			
+			<ul>
+				<li><a href="https://www.facebook.com"><img class="icon" src="../icons/fb.png" alt="facebook"</img></a></li>
+				<li><a href="https://www.instagram.com"><img class="icon" src="../icons/in.png" alt="instagram"</img></a></li>
+				<li><a href="https://twitter.com"><img class="icon" src="../icons/tw.png" alt="twitter"</img></a></li>
+				<li><a href="https://youtube.com"><img class="icon" src="../icons/yt.png" alt="youtube"</img></a></li>
+				<li><a href="https://plus.google.com"><img class="icon" src="../icons/gp.png" alt="gplus"</img></a></li>
+			</ul>
+		
+		</div>
+	
+		<div class="contact">
+			<h3 class="footerHead">Contact us</h3>
+			
+			<div class="footerContact">
+				<a HREF=mailto:s.kovalenko2016@gmail.com><img class= "footerImage" src="../img/cat.jpg" alt="mail"</img></a>
+				<div class="question">
+					<div><p class="footerText">Have any questions?</p></div>
+					<div><strong>Send me a mail</strong></div>
+				</div>
+			</div>
+			
+			<div class="contactInfo">
+				<div><p><strong>Tel: </strong>+48 123 456 789</p></div>
+				<div><p><strong>Mail: </strong>company@gmail.com</p></div>
+			</div>
+		</div>
+	
+	</div>
+	
+	<hr></hr>
+	<sup>© 2020 All rights reserved</sup>	
+</div>
+</body>
+</html>

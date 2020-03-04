@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<title>Info</title>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/style.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/form.css'>
+<meta charset="UTF-8">
+</head>
+<body>
+
+  <div class="header">
+	<div class="heading">
+		<div class="mainInfo">
+			<div class="logo">
+				<img src="../img/logo_transparent.png" alt="Logo">
+			</div>
+			<h1>Bus Travel</h1>
+		</div>
+		
+		<div class="nav">
+				<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/'">Strona główna</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="selectedButton" onclick="window.location.href = '/schedules'">Rozkład jazdy</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/drivers'">Kierowcy</button>
+	</div>
+	
+	
+		<div class="navigateSection">
+			<button type="button" class="navigateButton" onclick="window.location.href = '/buses'">Autobusy</button>
+		</div>
+		</div>  
+		
+		</div>
+		
+		<div><h3 class="pageTitle">Schedule details</h3></div>
+		<div class="titleTextCont"><p class="titleText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+		Aenean commodo ligula eget dolor</p></div>
+		
+		<div class="titleButton"><button class="navigateButtonSelected" type="button" onclick="window.location.href = '#top';">go to table</button>
+		
+	</div>
+  </div>
+
+
+  
+  <div class="main" id="top">
+	<h2 class="textHeading">Informacja szczegółowa</h2>
+	
+	<table>
+	<tr>
+		<td class="tableHead">Data odjazdu</td>
+		<td><%= schedule.departure.getFullYear() %>-<%= ("0" + (schedule.departure.getMonth() + 1)).slice(-2) %>-<%= ("0" + schedule.departure.getDate()).slice(-2) %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Data przyjazdu</td>
+		<td><%= schedule.arrival.getFullYear() %>-<%= ("0" + (schedule.arrival.getMonth() + 1)).slice(-2) %>-<%= ("0" + schedule.arrival.getDate()).slice(-2) %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Czas odjazdu</td>
+		<td><%= schedule.departureTime %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Czas przyjazdu</td>
+		<td><%= schedule.arrivalTime %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Punkt początkowy</td>
+		<td><%= cityFrom.cityName %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Punkt końcowy</td>
+		<td><%= cityTo.cityName %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Kierowca</td>
+		<td><%= driver.firstName %> <%= driver.lastName %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Autobus</td>
+		<td><%= bus.name %> <%= bus.number %></td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead">Cena biletu</td>
+		<td><%= schedule.price %></td>
+	<tr>
+	
+	</table>
+	
+	
+	
+	<div class="bottomSection">
+		<button type="button" class="tableButtonSelected" onclick="window.location.href = '/schedules'">Powrót</button>
+	</div>
+
+	
+	
+	
+  </div>
+ 
+  
+  
+  
+  
+  
+   <div class="footer">
+	<div class="footerMain">
+		
+		<div class="info">
+			<h3 class="footerHead">About us</h3>
+			<p class="footerText"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et 
+			magnis dis parturient montes, nascetur ridiculus mus.</p>
+		</div>
+		
+	
+		<div class="social">
+			<h3 class="footerHead">Social media</h3>
+			
+			
+			<ul>
+				<li><a href="https://www.facebook.com"><img class="icon" src="../icons/fb.png" alt="facebook"</img></a></li>
+				<li><a href="https://www.instagram.com"><img class="icon" src="../icons/in.png" alt="instagram"</img></a></li>
+				<li><a href="https://twitter.com"><img class="icon" src="../icons/tw.png" alt="twitter"</img></a></li>
+				<li><a href="https://youtube.com"><img class="icon" src="../icons/yt.png" alt="youtube"</img></a></li>
+				<li><a href="https://plus.google.com"><img class="icon" src="../icons/gp.png" alt="gplus"</img></a></li>
+			</ul>
+		
+		</div>
+	
+		<div class="contact">
+			<h3 class="footerHead">Contact us</h3>
+			
+			<div class="footerContact">
+				<a HREF=mailto:s.kovalenko2016@gmail.com><img class= "footerImage" src="../img/cat.jpg" alt="mail"</img></a>
+				<div class="question">
+					<div><p class="footerText">Have any questions?</p></div>
+					<div><strong>Send me a mail</strong></div>
+				</div>
+			</div>
+			
+			<div class="contactInfo">
+				<div><p><strong>Tel: </strong>+48 123 456 789</p></div>
+				<div><p><strong>Mail: </strong>company@gmail.com</p></div>
+			</div>
+		</div>
+	
+	</div>
+	
+	<hr></hr>
+	<sup>© 2020 All rights reserved</sup>	
+</div>
+</body>
+</html>

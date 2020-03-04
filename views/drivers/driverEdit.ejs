@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<title>Edit Driver</title>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/style.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../css/form.css'>
+<meta charset="UTF-8">
+</head>
+<body>
+
+  <div class="header">
+	<div class="heading">
+		<div class="mainInfo">
+			<div class="logo">
+				<img src="../img/logo_transparent.png" alt="Logo">
+			</div>
+			<h1>Bus Travel</h1>
+		</div>
+		
+		<div class="nav">
+			<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/'">Strona główna</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/schedules'">Rozkład jazdy</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="selectedButton" onclick="window.location.href = '/drivers'">Kierowcy</button>
+	</div>
+	
+	
+	<div class="navigateSection">
+		<button type="button" class="navigateButton" onclick="window.location.href = '/buses'">Autobusy</button>
+	</div>
+		</div>  
+		
+		</div>
+		
+		<div><h3 class="pageTitle">Edit Driver</h3></div>
+		<div class="titleTextCont"><p class="titleText">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+		Aenean commodo ligula eget dolor</p></div>
+		
+		<div class="titleButton"><button class="navigateButtonSelected" type="button" onclick="window.location.href = '#top';">go to table</button>
+		
+	</div>
+  </div>
+
+
+  
+  <div class="main" id="top">
+	<h2 class="textHeading">Edytuj kierowce</h2>
+	
+	<form onsubmit="return validate();" action="/drivers/<%= formAction %>" method="POST">
+	
+	<input type="hidden" name="driver_id" value="<%= driver.id %>"></input>
+
+	
+	<table>
+	<tr>
+		<td class="tableHead" id="imieHead">Imię</td>
+		
+		<td>
+			<div><input class="mainInput" id="imie" name="first_name"
+			type="text" placeholder="Imię" <%= formAction ? '' : 'readonly' %>
+                value="<%= driver.firstName %>"/>
+			<p class="wrongData" id="nameWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="nazwiskoHead">Nazwisko</td>
+		<td>
+			<div><input class="mainInput" id="nazwisko" name="last_name"
+			type="text" placeholder="Nazwisko" <%= formAction ? '' : 'readonly' %>
+                value="<%= driver.lastName %>"/>
+			<p class="wrongData" id="surnameWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="dataZatrudnieniaHead">Data zatrudnienia</td>
+		<td>
+			<div><input class="mainInput" id="dataZatrudnienia" name="date" 
+			type="date" placeholder="Data zatrudnienia" <%= formAction ? '' : 'readonly' %>
+                value="<%= driver.date.getFullYear() %>-<%= ("0" + (driver.date.getMonth() + 1)).slice(-2) %>-<%= ("0" + driver.date.getDate()).slice(-2) %>"/>
+			<p class="wrongData" id="dateWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="stazKierowaniaHead">Staż kierowania</td>
+		<td>
+			<div><input class="mainInput" id="stazKierowania" name="experience"
+			type="number" placeholder="Staż kierowania" <%= formAction ? '' : 'readonly' %>
+                value="<%= driver.experience %>"/>
+			<p class="wrongData" id="experienceWrong" style="display: none;"></p></div>
+		</td>
+
+	<tr>
+	
+	<tr>
+		<td class="tableHead" id="pensjaHead">Pensja</td>
+		<td>
+			<div><input class="mainInput" id="pensja" name="salary"
+			type="number" placeholder="Pensja" <%= formAction ? '' : 'readonly' %>
+                value="<%= driver.salary %>"/>
+			<p class="wrongData" id="salaryWrong" style="display: none;"></p></div>
+		</td>
+	<tr>
+
+	</table>
+	
+	<div class="returnSection">
+		
+		<div class="bottomSection">
+		<% if( formAction ) { %>
+		<div class="buttonCont"><button type="submit" class="tableButtonSelected">Zapisz zmiany</button></div>
+		<% } %>
+		<div class="buttonCont"><button type="button" class="tableButtonSelected" onclick="window.location.href = '/drivers'">Powrót</button></div>
+		</div>
+	
+		<div class="validationError">
+			<p class="wrongData" id="wrongForm" style="display: none;"></p>			
+		</div>
+
+	</div>
+	
+	</form>
+	
+  </div>
+  
+  <script>
+	function validate(){
+		var name = document.getElementById("imie");
+		var surname = document.getElementById("nazwisko");
+		var date = document.getElementById("dataZatrudnienia");
+		var experience = document.getElementById("stazKierowania");
+		var salary = document.getElementById("pensja");
+		
+		var nameHead = document.getElementById("imieHead");
+		var surnameHead = document.getElementById("nazwiskoHead");
+		var dateHead = document.getElementById("dataZatrudnieniaHead");
+		var experienceHead = document.getElementById("stazKierowaniaHead");
+		var salaryHead = document.getElementById("pensjaHead");
+		
+		var array = [];
+		
+		var isCorrect = true;
+		
+		nameHead.style.color = "#F2FAFE";
+		surnameHead.style.color = "#F2FAFE";
+		dateHead.style.color = "#F2FAFE";
+		experienceHead.style.color = "#F2FAFE";
+		salaryHead.style.color = "#F2FAFE";
+		
+		document.getElementById("nameWrong").style.display = "none";
+		document.getElementById("surnameWrong").style.display = "none";
+		document.getElementById("dateWrong").style.display = "none";
+		document.getElementById("experienceWrong").style.display = "none";
+		document.getElementById("salaryWrong").style.display = "none";
+		
+		document.getElementById("wrongForm").style.display = "none";
+		
+		
+		//wrong data
+		
+		//imie
+		if(name.value.trim().length < 3){
+			nameHead.style.color = "#FF0095";
+			var txt = "Value is too small";
+			document.getElementById("nameWrong").innerHTML = txt;
+			document.getElementById("nameWrong").style.display = "block";
+			array[array.length] = "Imie: "+txt;
+			isCorrect = false;
+		}
+		
+		if(name.value.trim().length > 30){
+			nameHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("nameWrong").innerHTML = txt;
+			document.getElementById("nameWrong").style.display = "block";
+			array[array.length] = "Imie: "+txt;
+			isCorrect = false;
+		}
+		
+		//nazwisko
+		if(surname.value.trim().length < 3){
+			surnameHead.style.color = "#FF0095";
+			var txt = "Value is too small";
+			document.getElementById("surnameWrong").innerHTML = txt;
+			document.getElementById("surnameWrong").style.display = "block";
+			array[array.length] = "Nazwisko: "+txt;
+			isCorrect = false;
+		}
+		
+		if(surname.value.trim().length > 30){
+			surnameHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("surnameWrong").innerHTML = txt;
+			document.getElementById("surnameWrong").style.display = "block";
+			array[array.length] = "Nazwisko: "+txt;
+			isCorrect = false;
+		}
+		
+		//data zatrudnienia
+        if(!date.value){
+			dateHead.style.color = "#FF0095";
+			var txt = "Please select a date";
+			document.getElementById("dateWrong").innerHTML = txt;
+			document.getElementById("dateWrong").style.display = "block";
+			array[array.length] = "Data zatrudnienia: "+txt;
+			isCorrect = false;
+		}	
+
+		var inputDate = new Date(date.value);
+		var minDate = new Date(2000, 0, 1);
+		var maxDate = new Date();
+	
+
+		if(inputDate <= minDate || inputDate > maxDate){
+			dateHead.style.color = "#FF0095";
+			var txt = "Wrong date";
+			document.getElementById("dateWrong").innerHTML = txt;
+			document.getElementById("dateWrong").style.display = "block";
+			array[array.length] = "Data zatrudnienia: "+txt;
+			isCorrect = false;
+		}
+
+		//experience
+		if(experience.value.trim().length > 2){
+			experienceHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("experienceWrong").innerHTML = txt;
+			document.getElementById("experienceWrong").style.display = "block";
+			array[array.length] = "Staż kierowania: "+txt;
+			isCorrect = false;
+		}
+		
+		if(experience.value.trim().length < 1){
+			experienceHead.style.color = "#FF0095";
+			var txt = "Please enter an experience";
+			document.getElementById("experienceWrong").innerHTML = txt;
+			document.getElementById("experienceWrong").style.display = "block";
+			array[array.length] = "Staż kierowania: "+txt;
+			isCorrect = false;
+		}
+		
+		if(experience.value < 0){
+			experienceHead.style.color = "#FF0095";
+			var txt = "Driving experience cannot be less than 0";
+			document.getElementById("experienceWrong").innerHTML = txt;
+			document.getElementById("experienceWrong").style.display = "block";
+			array[array.length] = txt;
+			isCorrect = false;
+		}
+		
+		//salary
+		if(salary.value.trim().length > 5){
+			salaryHead.style.color = "#FF0095";
+			var txt = "Value is too large";
+			document.getElementById("salaryWrong").innerHTML = txt;
+			document.getElementById("salaryWrong").style.display = "block";
+			array[array.length] = "Pensja: "+txt;
+			isCorrect = false;
+		}
+		
+		
+		if(salary.value < 500){
+			salaryHead.style.color = "#FF0095";
+			var txt = "Salary cannot be less than 500 zl"
+			document.getElementById("salaryWrong").innerHTML = txt;
+			document.getElementById("salaryWrong").style.display = "block";
+			array[array.length] = "Pensja: "+txt;
+			isCorrect = false;
+		}
+		
+		
+
+		
+		if(!isCorrect){
+			document.getElementById("wrongForm").innerHTML = "The form is incorrect!"
+			document.getElementById("wrongForm").style.display = "block";
+			
+			var txt ="";
+			
+			for (i=0; i<array.length; i++){
+				txt+= '\n' + "  -" + array[i];
+			}
+			
+			
+			alert("Formularz zawiera błędy:"+ txt);
+			return false;
+		}
+		else{
+			alert("Zmiany zostaly zapisane");
+			return true;
+		}
+
+	}
+  </script>
+  
+  
+  
+  
+ <div class="footer">
+	<div class="footerMain">
+		
+		<div class="info">
+			<h3 class="footerHead">About us</h3>
+			<p class="footerText"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et 
+			magnis dis parturient montes, nascetur ridiculus mus.</p>
+		</div>
+		
+	
+		<div class="social">
+			<h3 class="footerHead">Social media</h3>
+			
+			
+			<ul>
+				<li><a href="https://www.facebook.com"><img class="icon" src="../icons/fb.png" alt="facebook"</img></a></li>
+				<li><a href="https://www.instagram.com"><img class="icon" src="../icons/in.png" alt="instagram"</img></a></li>
+				<li><a href="https://twitter.com"><img class="icon" src="../icons/tw.png" alt="twitter"</img></a></li>
+				<li><a href="https://youtube.com"><img class="icon" src="../icons/yt.png" alt="youtube"</img></a></li>
+				<li><a href="https://plus.google.com"><img class="icon" src="../icons/gp.png" alt="gplus"</img></a></li>
+			</ul>
+		
+		</div>
+	
+		<div class="contact">
+			<h3 class="footerHead">Contact us</h3>
+			
+			<div class="footerContact">
+				<a HREF=mailto:s.kovalenko2016@gmail.com><img class= "footerImage" src="../img/cat.jpg" alt="mail"</img></a>
+				<div class="question">
+					<div><p class="footerText">Have any questions?</p></div>
+					<div><strong>Send me a mail</strong></div>
+				</div>
+			</div>
+			
+			<div class="contactInfo">
+				<div><p><strong>Tel: </strong>+48 123 456 789</p></div>
+				<div><p><strong>Mail: </strong>company@gmail.com</p></div>
+			</div>
+		</div>
+	
+	</div>
+	
+	<hr></hr>
+	<sup>© 2020 All rights reserved</sup>	
+</div>
+</body>
+</html>
